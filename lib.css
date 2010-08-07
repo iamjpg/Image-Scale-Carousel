@@ -1,0 +1,26 @@
+body {
+	font-family:"HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif;
+	color: #FFF;
+	font-size: 18px;
+	background: #000;
+}
+
+h1 {
+	font-size: 52px;
+	text-align: center;
+}
+
+h1,h2,h3,h4 {
+	font-weight: 100;
+}
+
+#photo_container {
+	width: 960px;
+	height: 400px;
+	margin: auto;
+	background-color: #000;
+}
+
+p {
+	text-align: center;
+}
