@@ -4,21 +4,23 @@
 	* Developed by J.P. Given (http://johnpatrickgiven.com)
 	* Useage: anyone so long as credit is left alone
 ******************************************************/
-var cObj;
-var x = 0; // Object X
-var y = 0; // Object Y
-var c = 0; // Object center point
-var ct = 0; // Object center point from top
-var mX = 0; // Mouse X
-var mY = 0;  // Mouse Y
-var imgCount = 1;
-var current = 0;
+
+var iscGlobal = {};
+
+
+iscGlobal.x = 0; // Object X
+iscGlobal.y = 0; // Object Y
+iscGlobal.c = 0; // Object center point
+iscGlobal.ct = 0; // Object center point from top
+
+iscGlobal.imgCount = 1;
+iscGlobal.current = 0;
 
 $(window).resize(function() {
-	x = cObj.offset().left;
-	y = cObj.offset().top;
-	c = x + (cObj.width() / 2);
-	ct = y + (cObj.height() / 2);
+	iscGlobal.x = iscGlobal.cObj.offset().left;
+	iscGlobal.y = iscGlobal.cObj.offset().top;
+	iscGlobal.c = iscGlobal.x + (iscGlobal.cObj.width() / 2);
+	iscGlobal.ct = iscGlobal.y + (iscGlobal.cObj.height() / 2);
 	posCount();
 });
 
@@ -26,29 +28,29 @@ $(window).resize(function() {
 (function($) {
 	$.fn.isc = function(images) {
 		
-		cObj = $(this);
-		current = 0;
-		imgCount = 1;
+		iscGlobal.cObj = $(this);
+		iscGlobal.current = 0;
+		iscGlobal.imgCount = 1;
 		
 		// set up the CSS
-		cObj.css("overflow","hidden");
-		//cObj.css("overflow-x","hidden");
+		iscGlobal.cObj.css("overflow","hidden");
+		//iscGlobal.cObj.css("overflow-x","hidden");
 		
 		//Append the images
-		cObj.append('<div class="internal_swipe_container"></div>');	
+		iscGlobal.cObj.append('<div class="internal_swipe_container"></div>');	
 		
 		for (i=0;i<images.length;i++) {
 			$(".internal_swipe_container").append('<div class="jq_swipe_image" id="swipe_div_' + i + '"><img id="swipe_img_' + i + '" src="' + images[i] + '" border="0"></div>');
 			
 			$("#internal_swipe_container").css({
-				width: cObj.width(),
-				height: cObj.height(),
+				width: iscGlobal.cObj.width(),
+				height: iscGlobal.cObj.height(),
 				overflow: "hidden"
 			});
 			
 			// Containing div height for loader
 			$(".jq_swipe_image").css({
-				"height":cObj.height() + "px",
+				"height":iscGlobal.cObj.height() + "px",
 				"background-color":"#FFF"
 			});
 			
@@ -71,48 +73,48 @@ $(window).resize(function() {
 				// Resize the img object to the proper ratio of the container.
 				var iw = $(this).width();
 				var ih = $(this).height();
-				if (cObj.width() > cObj.height()) {
+				if (iscGlobal.cObj.width() > iscGlobal.cObj.height()) {
 					//alert($(this).attr("id") + " width: " + iw + "|" + ih);
 					if (iw > ih) {
 						var fRatio = iw/ih;
 						$(this).css({
-							"width":cObj.width() + "px",
-							"height":Math.round(cObj.width() * (1/fRatio))
+							"width":iscGlobal.cObj.width() + "px",
+							"height":Math.round(iscGlobal.cObj.width() * (1/fRatio))
 						});
 
-						var newIh = Math.round(cObj.width() * (1/fRatio));
+						var newIh = Math.round(iscGlobal.cObj.width() * (1/fRatio));
 
-						if(newIh < cObj.height()) {
+						if(newIh < iscGlobal.cObj.height()) {
 							var fRatio = ih/iw;
 							$(this).css({
-								"height":cObj.height(),
-								"width":Math.round(cObj.height() * (1/fRatio))
+								"height":iscGlobal.cObj.height(),
+								"width":Math.round(iscGlobal.cObj.height() * (1/fRatio))
 							});
 						}
 					} else {
 						var fRatio = ih/iw;
 						$(this).css({
-							"height":cObj.height(),
-							"width":Math.round(cObj.height() * (1/fRatio))
+							"height":iscGlobal.cObj.height(),
+							"width":Math.round(iscGlobal.cObj.height() * (1/fRatio))
 						});
 					}
 				} else {
 					var fRatio = ih/iw;
 					$(this).css({
-						"height":cObj.height(),
-						"width":Math.round(cObj.height() * (1/fRatio))
+						"height":iscGlobal.cObj.height(),
+						"width":Math.round(iscGlobal.cObj.height() * (1/fRatio))
 					});
 				}
 				
 				// Center image within container
 
-				if ($(this).width() > cObj.width()) {
-					var wDiff = ($(this).width() - cObj.width()) / 2;
+				if ($(this).width() > iscGlobal.cObj.width()) {
+					var wDiff = ($(this).width() - iscGlobal.cObj.width()) / 2;
 					$(this).css("left", "-" + wDiff + "px");
 				}
 				
-				if ($(this).height() > cObj.height()) {
-					var hDiff = ($(this).height() - cObj.height()) / 2;
+				if ($(this).height() > iscGlobal.cObj.height()) {
+					var hDiff = ($(this).height() - iscGlobal.cObj.height()) / 2;
 					$(this).css("top", "-" + hDiff + "px");
 				}
 				
@@ -129,38 +131,38 @@ $(window).resize(function() {
 		});
 		
 		// Get the position of the obj the image will be loaded into
-		x = cObj.offset().left;
-		y = cObj.offset().top;
-		c = x + (cObj.width() / 2);
-		ct = y + (cObj.height() / 2);
+		iscGlobal.x = iscGlobal.cObj.offset().left;
+		iscGlobal.y = iscGlobal.cObj.offset().top;
+		iscGlobal.c = iscGlobal.x + (iscGlobal.cObj.width() / 2);
+		iscGlobal.ct = iscGlobal.y + (iscGlobal.cObj.height() / 2);
 		
 		// Append Nav
-		cObj.append('<div id="swipe_nav_prev" class="trans"><div></div></div>');
-		cObj.append('<div id="swipe_nav_next" class="trans"><div></div></div>');
+		iscGlobal.cObj.append('<div id="swipe_nav_prev" class="trans"><div></div></div>');
+		iscGlobal.cObj.append('<div id="swipe_nav_next" class="trans"><div></div></div>');
 		
 		$('#swipe_nav_next').bind("click", function() {
-			imgCount ++;
-			if (imgCount == images.length) { $('#swipe_nav_next').css("display","none"); }
+			iscGlobal.imgCount ++;
+			if (iscGlobal.imgCount == images.length) { $('#swipe_nav_next').css("display","none"); }
 			$('.internal_swipe_container').animate({
-				left: '-=' + cObj.width()
+				left: '-=' + iscGlobal.cObj.width()
 			}, 400, function() {
 				// Animation complete.
-				current = current + 1;
+				iscGlobal.current = iscGlobal.current + 1;
 				$("#count_container li").removeClass("current");
-				$("#count_" + current).addClass("current");
+				$("#count_" + iscGlobal.current).addClass("current");
 			});
 		});
 		
 		$('#swipe_nav_prev').bind("click", function() {
-			imgCount --;
-			if (imgCount == 1) { $('#swipe_nav_prev').css("display","none"); }
+			iscGlobal.imgCount --;
+			if (iscGlobal.imgCount == 1) { $('#swipe_nav_prev').css("display","none"); }
 			$('.internal_swipe_container').animate({
-				left: '+=' + cObj.width()
+				left: '+=' + iscGlobal.cObj.width()
 			}, 400, function() {
 				// Animation complete.
-				current = current - 1;
+				iscGlobal.current = iscGlobal.current - 1;
 				$("#count_container li").removeClass("current");
-				$("#count_" + current).addClass("current");
+				$("#count_" + iscGlobal.current).addClass("current");
 			});
 		});
 		
@@ -171,43 +173,43 @@ $(window).resize(function() {
 			$("#count_container").append('<li id="count_' + i + '" onclick="jumpTo(' + i + ');" class="counter"></li>');
 		}
 		
-		$("#count_" + current).addClass("current");
+		$("#count_" + iscGlobal.current).addClass("current");
 		
 		$(".counter").css({
-			"width":cObj.width() / images.length + "px"
+			"width":iscGlobal.cObj.width() / images.length + "px"
 		});
 		
 		posCount();
 		
 		$(document).mousemove(function (e) {
 			// Set global mouse position
-			mX = e.pageX;
-			mY = e.pageY;
+			iscGlobal.mX = e.pageX;
+			iscGlobal.mY = e.pageY;
 			
 			// Bounding box coordinents of object
-			var bY = y + (cObj.outerHeight(true)-6);
-			var rX = x + cObj.outerWidth(true);
-			if (((mY > y) && (mY < bY)) && ((mX > x) && (mX < rX))) {
-				if (mX < c) { // Prev
-					if (imgCount > 1) {
+			var bY = iscGlobal.y + (iscGlobal.cObj.outerHeight(true)-6);
+			var rX = iscGlobal.x + iscGlobal.cObj.outerWidth(true);
+			if (((iscGlobal.mY > iscGlobal.y) && (iscGlobal.mY < bY)) && ((iscGlobal.mX > iscGlobal.x) && (iscGlobal.mX < rX))) {
+				if (iscGlobal.mX < iscGlobal.c) { // Prev
+					if (iscGlobal.imgCount > 1) {
 						$('#swipe_nav_next').css("display","none");
 						$('#swipe_nav_prev').css({
 							"display":"block",
-							"height":(cObj.outerHeight(true) - 6) + "px",
-							"top": y + "px",
-							"left": x + "px",
-							"width":(cObj.width() * 0.2) + "px"
+							"height":(iscGlobal.cObj.outerHeight(true) - 6) + "px",
+							"top": iscGlobal.y + "px",
+							"left": iscGlobal.x + "px",
+							"width":(iscGlobal.cObj.width() * 0.2) + "px"
 						});
 					}
-				} else if (mX > c) { // Next
-					if (imgCount < images.length) {
+				} else if (iscGlobal.mX > iscGlobal.c) { // Next
+					if (iscGlobal.imgCount < images.length) {
 						$('#swipe_nav_prev').css("display","none");
 						$('#swipe_nav_next').css({
 							"display":"block",
-							"height":(cObj.outerHeight(true) - 6) + "px",
-							"top": y + "px",
-							"left": ((x + cObj.width()) - cObj.width() * 0.2) + "px",
-							"width":(cObj.width() * 0.2) + "px"
+							"height":(iscGlobal.cObj.outerHeight(true) - 6) + "px",
+							"top": iscGlobal.y + "px",
+							"left": ((iscGlobal.x + iscGlobal.cObj.width()) - iscGlobal.cObj.width() * 0.2) + "px",
+							"width":(iscGlobal.cObj.width() * 0.2) + "px"
 						});
 					}
 				}
@@ -224,35 +226,35 @@ function jumpTo(index) {
 	
 	$('#swipe_nav_next,#swipe_nav_prev').css("display","none");
 	
-	if (index > current) {
-		var diff = index - current;
+	if (index > iscGlobal.current) {
+		var diff = index - iscGlobal.current;
 	} else {
-		var diff = current - index;
+		var diff = iscGlobal.current - index;
 	}
 	
-	var go_to_xy = cObj.width() * diff;
+	var go_to_xy = iscGlobal.cObj.width() * diff;
 	
-	if (index >= current) {
+	if (index >= iscGlobal.current) {
 		var str = '-=';
 	} else {
 		var str = '+=';
 	}
 	
-	current = index;
+	iscGlobal.current = index;
 	
 	$('.internal_swipe_container').animate({
 		left: str + go_to_xy
 	}, 400, function() {
 		$("#count_container li").removeClass("current");
-		$("#count_" + current).addClass("current");
+		$("#count_" + iscGlobal.current).addClass("current");
 		
-		imgCount = index + 1;
+		iscGlobal.imgCount = index + 1;
 	});
 }
 
 function posCount() {
 	$("#count_container").css({
-		"left":x + "px",
-		"top":(y + cObj.height() - 6) + "px"
+		"left":iscGlobal.x + "px",
+		"top":(iscGlobal.y + iscGlobal.cObj.height() - 6) + "px"
 	});
 }
