@@ -27,12 +27,19 @@ $(window).resize(function() {
 
 
 (function($) {
-	$.fn.isc = function(images) {
+	$.fn.isc = function(args) {
 		
+		if (args.autoplay) {
+			iscGlobal.autoplay = true;
+			if (args.autoplayTimer > 0) {
+				iscGlobal.autoplayTimer = args.autoplayTimer;
+			}
+		}
+
 		iscGlobal.cObj = $(this);
 		iscGlobal.current = 0;
 		iscGlobal.imgCount = 1;
-		iscGlobal.imagesLength = images.length;
+		iscGlobal.imagesLength = args.imgArray.length;
 		
 		// set up the CSS
 		iscGlobal.cObj.css("overflow","hidden");
@@ -41,8 +48,8 @@ $(window).resize(function() {
 		//Append the images
 		iscGlobal.cObj.append('<div class="internal_swipe_container"></div>');	
 		
-		for (i=0;i<images.length;i++) {
-			$(".internal_swipe_container").append('<div class="jq_swipe_image" id="swipe_div_' + i + '"><img id="swipe_img_' + i + '" src="' + images[i] + '" border="0"></div>');
+		for (i=0;i<args.imgArray.length;i++) {
+			$(".internal_swipe_container").append('<div class="jq_swipe_image" id="swipe_div_' + i + '"><img id="swipe_img_' + i + '" src="' + args.imgArray[i] + '" border="0"></div>');
 			
 			$("#internal_swipe_container").css({
 				width: iscGlobal.cObj.width(),
@@ -124,7 +131,7 @@ $(window).resize(function() {
 		}
 		
 		// Set CSS for image container after appended
-		$(".internal_swipe_container").css("width",($(this).width() * images.length) + "px");
+		$(".internal_swipe_container").css("width",($(this).width() * args.imgArray.length) + "px");
 		$(".jq_swipe_image").css({
 			"float":"left",
 			"text-align":"center",
@@ -145,7 +152,7 @@ $(window).resize(function() {
 		$('#swipe_nav_next').bind("click", function() {
 			iscGlobal.autoplay = false;
 			iscGlobal.imgCount ++;
-			if (iscGlobal.imgCount == images.length) { $('#swipe_nav_next').css("display","none"); }
+			if (iscGlobal.imgCount == args.imgArray.length) { $('#swipe_nav_next').css("display","none"); }
 			$('.internal_swipe_container').animate({
 				left: '-=' + iscGlobal.cObj.width()
 			}, 400, function() {
@@ -173,14 +180,14 @@ $(window).resize(function() {
 		// Append Count
 		$("body").append('<ul id="count_container" class="trans"></ul>');
 		
-		for (i=0;i<images.length;i++) {
+		for (i=0;i<args.imgArray.length;i++) {
 			$("#count_container").append('<li id="count_' + i + '" onclick="isc_jumpTo(' + i + ');" class="counter"></li>');
 		}
 		
 		$("#count_" + iscGlobal.current).addClass("current");
 		
 		$(".counter").css({
-			"width":iscGlobal.cObj.width() / images.length + "px"
+			"width":iscGlobal.cObj.width() / args.imgArray.length + "px"
 		});
 		
 		isc_posCount();
@@ -206,7 +213,7 @@ $(window).resize(function() {
 						});
 					}
 				} else if (iscGlobal.mX > iscGlobal.c) { // Next
-					if (iscGlobal.imgCount < images.length) {
+					if (iscGlobal.imgCount < args.imgArray.length) {
 						$('#swipe_nav_prev').css("display","none");
 						$('#swipe_nav_next').css({
 							"display":"block",

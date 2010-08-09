@@ -12,8 +12,6 @@
 	<link rel="stylesheet" href="jQuery.isc/jQuery.isc.css" type="text/css" media="screen" charset="utf-8">
 	<script src="jQuery.isc/jquery-image-scale-carousel.js" type="text/javascript" charset="utf-8"></script>
 	<script>
-		// iscGlobal.autoplay = true; // Default is false.  Uncomment for autoplay.
-		// iscGlobal.autoplayTimer = 5000; // Default is 3 seconds (3000). Uncomment to overwrite default.
 		var carousel_images = [
 			"images/1.jpg",
 			"http://farm4.static.flickr.com/3328/3575375564_79ab90dca8_b.jpg",
@@ -23,10 +21,22 @@
 			"http://farm1.static.flickr.com/118/299048945_faba1a6a4b_b.jpg",
 			"http://farm4.static.flickr.com/3089/2335224771_cec36d33a6_o.jpg" // Example of a local image
 		];
-
+		
+		// Example without autoplay
 		$(window).load(function() {
-			$("#photo_container").isc(carousel_images);	
+			$("#photo_container").isc({
+				imgArray: carousel_images
+			});	
 		});
+		
+		// Example with autoplay
+		/* $(window).load(function() {
+			$("#photo_container").isc({
+				imgArray: carousel_images,
+				autoplay: true,
+				autoplayTimer: 5000 // 5 seconds.
+			});	
+		}); */
 	</script>
 </head>
 <body>
