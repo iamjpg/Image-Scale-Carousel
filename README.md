@@ -7,5 +7,6 @@ In last release:
 * Realized the mode of the video player.
 * Implemented dynamic loading of images as the slider is scrolled.
 
-For an example of the slider, see the website <http://johnpatrickgiven.com/jquery/Image-Scale-Carousel/> 
-New fast video-slider see on the website <http://invitation.ru/show.html>
+For an example of the slider, see the website <http://johnpatrickgiven.com/jquery/Image-Scale-Carousel/>.
+
+New fast video-slider see on the website <http://invitation.ru/show.html>.
