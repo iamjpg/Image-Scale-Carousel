@@ -14,35 +14,48 @@
 	<br>
 	<p>This is an example of how "jQuery Image Scale Carousel" implemented using dynamic PHP.</p>
 	
-    <script type="text/javascript" charset="utf-8" src="Third-party.Plugins/jquery.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="Third-party.Plugins/jquery.min.js"></script>
 	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
 
 	<!-- jQuery Image Scale Carousel CSS & JS -->
-	<script type="text/javascript" charset="utf-8" src="Third-party.Plugins/jQuery.isc/jquery-image-scale-carousel.js"></script>
+	<script type="text/javascript" charset="utf-8" src="Third-party.Plugins/jQuery.isc/jquery-image-scale-carousel.min.js"></script>
 </body>
-<script>
-	// Build the array using PHP.  Reads images in the images directory.
+<script type="text/javascript">
 	<?php
-	// Open directory holding the images.
-	if ($dir = opendir('pic/')) {
+	// Build the array using PHP.  Reads images in the images directory.
+		$ini_scream = ini_get('error_reporting');
+		error_reporting(0);
+
 		// Array opener with carousel_images var
 		echo 'var carousel_images = [';
-		// Loop contents of the directory.
-	    while (false !== ($file = readdir($dir))) {
-			// Split all files into two variables: $fileName & $fileExt
-			list($fileName, $fileExt) = split('[/.-]', $file);
-			// Use above variables to insure you are only adding image files.  Important for ignoring hidden files.
-			if (($fileExt == 'jpg') || ($fileExt == 'gif') || ($fileExt == 'png') || ($fileExt == 'jpeg')) {
-				// List Images
-				echo '"pic/' . $file . '",';
-			}
-	    }
+		// Explore contents of the directory.
+		$dir  = 'pic/';
+		// Open directory holding the images.
+		if (is_dir($dir)) {
+			if ($dh = @opendir($dir)) {
+				// Which type of images
+				$exts  = array('jpg','jpeg','gif','png');
+				$resFiles  = array();
+				$files = scandir($dir,0);
+				foreach ($files as $fileName){
+					$pInfo = pathinfo($fileName);
+					$fileExt = $pInfo['extension'];
+					if (in_array($fileExt, $exts)) {
+						array_push($resFiles, '"'.$dir.$fileName.'"'); 
+					}
+				}
+				// Fill list Images
+				echo implode(",", $resFiles);
+				//Close directory
+			    closedir($dir);
+			} 
+		}
 		// Close Array
 		echo ']';
-		//Close directory
-	    closedir($dir);
-	}
+		
+		ini_set('error_reporting', $ini_scream);
 	?>
+	
 	// Example without autoplay
 	// $(window).load(function() {
 	// 	$("#photo_container").isc({
@@ -55,6 +68,7 @@
 		$("#photo_container").isc({
 			imgArray: carousel_images,
 			imageWhiteSpace: 34,
+			dynamic: true,
 
 			autoplay: true,
 			autoplayRounded: true,

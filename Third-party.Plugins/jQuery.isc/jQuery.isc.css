@@ -68,11 +68,11 @@
 
 
 .jq_swipe_image {
-	background: url('loader.gif') no-repeat center center;
+	background: url('loader.gif') no-repeat center center / auto;
 	background-color: #090202;
 }
 
-.white-space {
+.white_space {
 	position: relative;
 	visibility: visible;
 	background-color: inherit;

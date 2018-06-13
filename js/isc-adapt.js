@@ -16,9 +16,9 @@ $(window).load(function() {
 
 	var aSlider = $("#photo_container");
 
-	// Full browser-window: "photo_container" in "body"
-	w = window.innerWidth;
-	h = window.innerHeight;
+	// // Full browser-window: "photo_container" in "body"
+	// w = window.innerWidth;
+	// h = window.innerHeight;
 
 	// Not full browser-window: "photo_container" in percent "div"
     var aParent = $("#ph"); 
@@ -30,12 +30,13 @@ $(window).load(function() {
 
 	aSlider.isc({
 		imgArray: carousel_images,
-		imageWhiteSpace: 34,
+		imageWhiteSpace: 52,
+		dynamic: true,
 
 		autoplay: true,
 		autoplayRounded: true,
-		animationPeriod: 400,
-		autoplayTimer: 1000, 
+		animationPeriod: 2500,
+		autoplayTimer: 4000, 
 		videoStyle: true,
 		autoresize: true
 	});	

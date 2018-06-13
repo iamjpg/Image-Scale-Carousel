@@ -11,27 +11,28 @@ var carousel_images = [
 ];
 
 
-// Example without autoplay
-$(window).load(function() {
-	$("#photo_container").isc({
-		imgArray: carousel_images
-	});	
-});
-
-// // Example with autoplay
+// // Example without autoplay
 // $(window).load(function() {
-
-// 	var aSlider = $("#photo_container");
-
-// 	aSlider.isc({
-// 		imgArray: carousel_images,
-// 		imageWhiteSpace: 34,
-
-// 		autoplay: true,
-// 		autoplayRounded: true,
-// 		animationPeriod: 400,
-// 		autoplayTimer: 1000, 
-// 		videoStyle: true,
-// 		autoresize: false
+// 	$("#photo_container").isc({
+// 		imgArray: carousel_images
 // 	});	
-// }); 
+// });
+
+// Example with autoplay
+$(window).load(function() {
+
+	var aSlider = $("#photo_container");
+
+	aSlider.isc({
+		imgArray: carousel_images,
+		imageWhiteSpace: 34,
+		dynamic: false,
+
+		autoplay: true,
+		autoplayRounded: true,
+		animationPeriod: 1400,
+		autoplayTimer: 5000, 
+		videoStyle: true,
+		autoresize: false
+	});	
+}); 
